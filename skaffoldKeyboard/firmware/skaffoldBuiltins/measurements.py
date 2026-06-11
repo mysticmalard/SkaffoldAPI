@@ -1,0 +1,9 @@
+from ..decos import *
+from .included import enum, IntEnum, global_enum
+
+Direction = IntEnum('Direction', map(lambda x: x[::-1], enum(('RIGHT', 'UP', 'LEFT', 'DOWN',))))
+Direction(0)._add_alias_('HORIZONTAL')
+Direction(1)._add_alias_('VERTICAL')
+global_enum(Direction)
+
+__all__ = ['Direction', 'HORIZONTAL', 'VERTICAL', 'RIGHT', 'UP', 'LEFT', 'DOWN']
