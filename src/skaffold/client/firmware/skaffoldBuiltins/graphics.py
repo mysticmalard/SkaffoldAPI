@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (c) 2026 MysticMalard
+
 from ..decos import *
 from .colors import *
 from .included import *
@@ -10,7 +13,7 @@ class Graphic:
         pass
 
 class Gradient:
-    def __init__(self, *points: tuple[tuple[Color, float]]) -> None:
+    def __init__(self, *points: tuple[tuple[Color, float], ...]) -> None:
         self.points = list(points)
 
     def getColor(self, alpha: float) -> Color:
@@ -21,7 +24,7 @@ class Gradient:
 
 class SimpleGradient(Gradient):
     def __init__(self, color1: Color, color2: Color) -> None:
-        Gradient.__init__(self, (color1, 0), (color2, 1.0))
+        Gradient.__init__(self, (color1, 0.0), (color2, 1.0))
 
 class Bar(Graphic):
     def __init__(self, direction: Direction, gradient: Gradient, solid: bool = True, signed: bool = False) -> None:
@@ -47,8 +50,7 @@ class Bar(Graphic):
             for x in range(w):
                 i = y if self.direction&1 else x
                 c = self.gradient.getColor(self.alpha) if self.solid else self.gradient.getColor(i / l)
-                if self.direction:
-                    if i <= self.alpha:
-                        self.pane[y][x].setColor(c)
-                    else:
-                        self.pane[y][x].setColor(BLACK)
+                if (i <= self.alpha) ^ (self.direction>>1):
+                    self.pane[y][x].setColor(c)
+                else:
+                    self.pane[y][x].setColor(BLACK)

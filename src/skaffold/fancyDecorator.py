@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (c) 2026 MysticMalard
+
 # Decorator that allows optionally naming the filling
 def _fancyDecorator(deco: function):
     # deco: main decorator function

@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (c) 2026 MysticMalard
+
 from ..decos import *
 from .colors import *
 from .measurements import Direction, HORIZONTAL, VERTICAL, RIGHT, UP, LEFT, DOWN
@@ -49,12 +52,12 @@ funcs = [
 
 @_kern
 @_op
-def reply(data: tuple[int]) -> None:
+def reply(data: tuple[int, ...]) -> None:
     ...
 
 @_kern('read')
 @_op('read')
-def listen(argc: int, wait: bool = True) -> tuple[int]:
+def listen(argc: int, wait: bool = True) -> tuple[int, ...]:
     ...
 
 @_kern
@@ -72,21 +75,16 @@ def sys_call() -> None:
 def reboot() -> None:
     ...
 
-@_kern
-@_op
-def unpack(*args: tuple):
-    ...
-
 @_op
 def index(container: Any, key: Any) -> Any:
     return container.__getitem__(key)
 
 @_op
-def lerp(t: float, a, b):
+def lerp(t: float, a: Any, b: Any) -> Any:
     return (1 - t) * a + t * b
 
 @_op
-def delerp(v, a, b) -> float:
+def delerp(v: float, a: float, b: float) -> float:
     # * Shoutout to Freya Holmer for the delerp
     return (v - a) / (b - a)
 
@@ -108,14 +106,14 @@ def draw(frame: tuple[tuple[list[int, int, int], ...], ...]) -> None:
     ...
 
 @_op
-def bisect(parent: Pane, size: tuple, direction:Direction=HORIZONTAL) -> tuple[Pane, Pane]:
+def bisect(parent: Pane, size: int | float, direction: Direction = HORIZONTAL) -> tuple[Pane, Pane]:
     s = (size, 1.0) if direction&1 else (1.0, size)
     child1 = parent.makeChild(s)
     child2 = parent.makeChild((1.0, 1.0))
     return child1, child2
 
 @_op
-def partition(parent: Pane, num: int, direction:Direction=HORIZONTAL) -> tuple[Pane, ...]:
+def partition(parent: Pane, num: int, direction: Direction = HORIZONTAL) -> tuple[Pane, ...]:
     s = 1 / num
     children = list(bisect(parent, s, direction))
     subparent = children[1]

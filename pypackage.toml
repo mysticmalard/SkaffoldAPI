@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skaffold-api"
+version = "0.0.0"
+description = "Framework Skaffold Python API"
+readme = "README.md"
+authors = [{name = "MysticMalard"}]
+license = { text = "GPL-3.0-only" }
+requires-python = ">=3.14"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["skaffold*"]
+
+[project.classifiers]

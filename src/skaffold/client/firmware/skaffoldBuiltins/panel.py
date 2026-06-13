@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Copyright (c) 2026 MysticMalard
+
 from ..decos import *
 from .colors import *
 from .graphics import *
@@ -9,11 +12,11 @@ class Pixel:
 
     def setColor(self, color: Color) -> None:
         # * Funky cuz screen is indexed by [y, x]
-        screen[*self.pos[::-1]][:] = color.args
+        SCREEN[*self.pos[::-1]][:] = color.args
 
     def getColor(self) -> Color:
         # * Funky cuz screen is indexed by [y, x]
-        return Color(*screen[*self.pos[::-1]])
+        return Color(*SCREEN[*self.pos[::-1]])
 
 class Row:
     def __init__(self, *pos: tuple[int, int]) -> None:
@@ -22,7 +25,7 @@ class Row:
     def __len__(self) -> int:
         return len(self.pixels)
 
-    def __getitem__(self, key: Key) -> Pixel:
+    def __getitem__(self, key: Key) -> Pixel | tuple[Pixel, ...]:
         return self.pixels[key]
 
     def __iter__(self) -> iterator:
@@ -30,13 +33,13 @@ class Row:
 
 class SubRow(Row):
     def __init__(self, pos: tuple[int, int], w: int) -> None:
-        self.pixels = screen[pos[1]][pos[0]:pos[0]+w]
+        self.pixels = SCREEN[pos[1]][pos[0]:pos[0]+w]
 
 class Matrix:
     def __init__(self, size: tuple[int, int]) -> None:
         self.rows = (Row(size[0], y) for y in range(size))
 
-    def __getitem__(self, key: Key) -> Row:
+    def __getitem__(self, key: Key) -> Pixel | Row | tuple[Pixel | Row, ...]:
         return self.rows[key]
 
     def __len__(self) -> int:
@@ -75,10 +78,10 @@ class Pane:
         self.graphics.append(graphic)
         graphic.pane = self
 
-    def unbindGraphic(self, i: int) -> None:
+    def unbindGraphic(self, i: int) -> Graphic:
         return self.graphics.pop(i)
 
-    def makeChild(self, p2: tuple[int, int]) -> Pane:
+    def makeChild(self, p2: tuple[int | float, int | float]) -> Pane:
         p2 = list(p2)
         if isinstance(p2[0], float):
             p2[0] = p2[0] * self.sizeX // 1 + self.posX
@@ -93,7 +96,7 @@ class Pane:
         for job in self.graphics + self.children:
             job.render()
 
-    def __getitem__(self, *keys: tuple[Key] | tuple[Key, Key]) -> Matrix | Row | Pixel:
+    def __getitem__(self, *keys: tuple[Key, ...]) -> Matrix | Row | Pixel | tuple[Pixel | Row, ...]:
         # * Functionally the same but slightly more compact
         # * if len(keys) - 1:
         # *     return self.matrix[keys[0]][keys[1]]
@@ -109,14 +112,14 @@ class Framebuffer:
         self.frames = ((([0, 0, 0],) * size[1],) * size[0], (([0, 0, 0],) * size[1],) * size[0])
         self.flipped = 0
 
-    def __getitem__(self, *keys: tuple[Key] | tuple[Key, Key]) -> tuple[tuple[list[int], ...]] | tuple[list[int], ...] | list[int]:
+    def __getitem__(self, *keys: tuple[Key, Key | None]) -> tuple[tuple[list[int], ...], ...] | tuple[list[int], ...] | list[int]:
         frame = self.frames[self.flipped]
         for key in keys:
             frame = frame[key]
         return frame
 
-    def __setitem__(self, *keys: tuple[Key, Key], value: int) -> None:
-        self.frames[not self.flipped][keys[0]][keys[1]] = value
+    def __setitem__(self, *keys: tuple[Key, Key | None], value: int) -> None:
+        self.frames[not self.flipped][*keys] = value
 
     def flip(self) -> None:
         self.flipped ^= 1
@@ -135,4 +138,4 @@ class Screen(Pane):
         self.framebuffer.flip()
         draw(self.framebuffer[:])
 
-screen = Screen()
+SCREEN = Screen()
