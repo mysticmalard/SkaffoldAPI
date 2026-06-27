@@ -3,6 +3,7 @@
 
 from ..decos import *
 from .colors import *
+from .measurements import *
 from .included import *
 
 class Graphic:

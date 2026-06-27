@@ -28,6 +28,8 @@ This project is nowhere near done yet. The afformentioned Framework Skaffold Sys
 Again I reiterate that this project isn't even close to completion. Thusly, things listed here may not *actually* be ready
 
 * Client Script Builtin Suite
+* Client Script Translator
+* Example Script and assembly file
 
 ### TODO
 ---
@@ -36,7 +38,6 @@ Again I reiterate that this project isn't even close to completion. Thusly, thin
 * Add a Changelog (This TODO list will move there)
 
 #### **Coming Up**
-* Client Script Translator
 * Client Script Assembler
 * Server Script Builtin Suite (Likely similar to Client Suite)
 * Server Script Translator

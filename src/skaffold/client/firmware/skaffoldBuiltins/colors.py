@@ -13,7 +13,7 @@ class Color:
     def __mul__(self, other: float) -> Color:
         return Color(*map(lambda x: x * other, self.args))
     def __rmul__(self, other: float) -> Color:
-        return Color(*map(lambda x: x * other, self.args))
+        return self.__mul__(other)
 
 BLACK = Color(0, 0, 0)
 BLUE = Color(0, 0, 255)

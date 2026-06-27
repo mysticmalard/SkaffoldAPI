@@ -6,6 +6,11 @@ from .colors import *
 from .graphics import *
 from .included import *
 
+@_kern
+@_op
+def get_matrix() -> tuple[int, int]:
+    return (0,0)
+
 class Pixel:
     def __init__(self, *pos: tuple[int, int]) -> None:
         self.pos = pos
@@ -25,7 +30,7 @@ class Row:
     def __len__(self) -> int:
         return len(self.pixels)
 
-    def __getitem__(self, key: Key) -> Pixel | tuple[Pixel, ...]:
+    def __getitem__(self, key: int | slice) -> Pixel | tuple[Pixel, ...]:
         return self.pixels[key]
 
     def __iter__(self) -> iterator:
@@ -37,9 +42,9 @@ class SubRow(Row):
 
 class Matrix:
     def __init__(self, size: tuple[int, int]) -> None:
-        self.rows = (Row(size[0], y) for y in range(size))
+        self.rows = (Row(size[0], y) for y in range(size[1]))
 
-    def __getitem__(self, key: Key) -> Pixel | Row | tuple[Pixel | Row, ...]:
+    def __getitem__(self, key: int | slice) -> Pixel | Row | tuple[Pixel | Row, ...]:
         return self.rows[key]
 
     def __len__(self) -> int:
@@ -69,7 +74,7 @@ class Pane:
         del self
 
     def fuseChildren(self, recursive: bool = True) -> None:
-        for i, child in enum(self.children):
+        for i, child in enumerate(self.children):
             if recursive:
                 self.children.pop(i).fuseChildren(recursive)
             child.fuse()
@@ -96,7 +101,7 @@ class Pane:
         for job in self.graphics + self.children:
             job.render()
 
-    def __getitem__(self, *keys: tuple[Key, ...]) -> Matrix | Row | Pixel | tuple[Pixel | Row, ...]:
+    def __getitem__(self, *keys: tuple[int | slice, ...]) -> Matrix | Row | Pixel | tuple[Pixel | Row, ...]:
         # * Functionally the same but slightly more compact
         # * if len(keys) - 1:
         # *     return self.matrix[keys[0]][keys[1]]
@@ -112,13 +117,13 @@ class Framebuffer:
         self.frames = ((([0, 0, 0],) * size[1],) * size[0], (([0, 0, 0],) * size[1],) * size[0])
         self.flipped = 0
 
-    def __getitem__(self, *keys: tuple[Key, Key | None]) -> tuple[tuple[list[int], ...], ...] | tuple[list[int], ...] | list[int]:
+    def __getitem__(self, *keys: tuple[int | slice, int | slice | None]) -> tuple[tuple[list[int], ...], ...] | tuple[list[int], ...] | list[int]:
         frame = self.frames[self.flipped]
         for key in keys:
             frame = frame[key]
         return frame
 
-    def __setitem__(self, *keys: tuple[Key, Key | None], value: int) -> None:
+    def __setitem__(self, *keys: tuple[int | slice, int | slice | None], value: int) -> None:
         self.frames[not self.flipped][*keys] = value
 
     def flip(self) -> None:

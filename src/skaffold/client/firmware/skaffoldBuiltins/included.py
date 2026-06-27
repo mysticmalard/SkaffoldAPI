@@ -1,33 +1,40 @@
 # SPDX-License-Identifier: GPL-3.0-only
 # Copyright (c) 2026 MysticMalard
 
+from types import GenericAlias as alias, UnionType as union
+from typing import Any, Iterator as iterator, TypeAlias
+from enum import Enum, EnumType, ReprEnum, IntEnum, global_enum
+
 from ..decos import *
 from .colors import *
 from .measurements import Direction, HORIZONTAL, VERTICAL, RIGHT, UP, LEFT, DOWN
+from .graphics import *
 from .panel import Pane
 
-from types import GenericAlias as alias, UnionType as union
-from typing import Any, Iterator as iterator, TypeAlias
-from enum import Enum, IntEnum, global_enum
-
-Key: TypeAlias = int | slice
+function: TypeAlias = type(lambda: None)
 
 types = [
     Any,
     alias,
     bool,
     dict,
+    EnumType,
+    IntEnum,
+    ReprEnum,
     Enum,
-    (enum := enumerate),
+    Ellipsis,
+    enumerate,
     filter,
     float,
     function,
     int,
     iterator,
-    Key,
     list,
     map,
     memoryview,
+    None,
+    type(None),
+    object,
     range,
     reversed,
     set,
@@ -41,6 +48,7 @@ types = [
 ]
 
 funcs = [
+    global_enum,
     all,
     any,
     isinstance,
@@ -93,15 +101,13 @@ def scale(p1: tuple[Color, float], p2: tuple[Color, float], alpha: float) -> Col
     # * Shoutout to Freya Holmer for the rescale
     return lerp(delerp(alpha, p1[1], p2[1]), p1[0], p2[0])
 
+@_op
 def charToFloat(val: int, signed: bool = False) -> float:
     v = val ^ (((val & 128) << 1) - signed)
     return v / 256
 
 @_kern
-def get_matrix() -> tuple[int, int]:
-    ...
-
-@_kern
+@_op
 def draw(frame: tuple[tuple[list[int, int, int], ...], ...]) -> None:
     ...
 

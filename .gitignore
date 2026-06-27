@@ -1,3 +1,4 @@
 *.pyc
 license_file_header.txt
 *.arc
+src/skaffold_api.egg-info/*

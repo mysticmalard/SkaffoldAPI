@@ -2,4 +2,5 @@
 # Copyright (c) 2026 MysticMalard
 
 from .firmware import *
-from .parser import *
+from .annotator import *
+from .linker import *

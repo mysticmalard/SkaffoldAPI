@@ -1,0 +1,2425 @@
+ver 0.0.2
+string "__init__"
+string "self"
+string "*args"
+imm 2
+tuple
+hint Self
+hint tuple
+hint int
+hint int
+hint int
+imm 3
+tuple
+anot
+hint Void
+imm 3
+tuple
+def
+let self
+let args
+push args !
+push self !
+string 'args'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "__add__"
+string "self"
+string "other"
+imm 2
+tuple
+hint Self
+hint Self
+hint Self
+imm 3
+tuple
+def
+let self
+let other
+push Self
+push map
+string 'x'
+string 'y'
+imm 2
+tuple
+lambda
+let x
+let y
+push x !
+push y !
+bop +
+return
+exit
+push zip
+push self !
+string 'args'
+getattr
+push other !
+string 'args'
+getattr
+imm 2
+call
+imm 2
+call
+call_ex
+return
+exit
+imm 2
+tuple
+string "__mul__"
+string "self"
+string "other"
+imm 2
+tuple
+hint Self
+hint float
+hint Self
+imm 3
+tuple
+def
+let self
+let other
+push Self
+push map
+push other !
+imm 1
+tuple
+string 'x'
+imm 1
+tuple
+lambda
+let x
+push x !
+push other @
+bop *
+return
+exit
+push self !
+string 'args'
+getattr
+imm 2
+call
+call_ex
+return
+exit
+imm 2
+tuple
+string "__rmul__"
+string "self"
+string "other"
+imm 2
+tuple
+hint Self
+hint float
+hint Self
+imm 3
+tuple
+def
+let self
+let other
+push self !
+string '__mul__'
+getattr
+push other !
+imm 1
+call
+return
+exit
+imm 2
+tuple
+imm 4
+dict
+class
+let Color
+op rgb
+string "__init__"
+string "self"
+string "*pos"
+imm 2
+tuple
+hint Self
+hint tuple
+hint int
+hint int
+imm 2
+tuple
+anot
+hint Void
+imm 3
+tuple
+def
+let self
+let pos
+push pos !
+push self !
+string 'pos'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "setColor"
+string "self"
+string "color"
+imm 2
+tuple
+hint Self
+hint Color
+hint Void
+imm 3
+tuple
+def
+let self
+let color
+push color !
+string 'args'
+getattr
+push SCREEN
+imm 0
+list %
+push self !
+string 'pos'
+getattr
+push None
+push None
+int -1
+slice
+bop []
+bop +
+cast tuple $
+bop []
+imm 3
+tuple
+push None
+push None
+push None
+store
+push None
+return
+exit
+imm 2
+tuple
+string "getColor"
+string "self"
+imm 1
+tuple
+hint Self
+hint Color
+imm 2
+tuple
+def
+let self
+push Color
+push SCREEN
+imm 0
+list %
+push self !
+string 'pos'
+getattr
+push None
+push None
+int -1
+slice
+bop []
+bop +
+cast tuple $
+bop []
+call_ex
+return
+exit
+imm 2
+tuple
+imm 3
+dict
+class
+let Pixel
+string "__init__"
+string "self"
+string "*pos"
+imm 2
+tuple
+hint Self
+hint tuple
+hint int
+hint int
+imm 2
+tuple
+anot
+hint Void
+imm 3
+tuple
+def
+let self
+let pos
+push pos !
+imm 1
+tuple
+string '.0'
+string 'x'
+imm 2
+tuple
+lambda
+let .0
+let x
+imm 1
+tuple
+push .0
+for L1
+let x
+push Pixel
+push x !
+push pos @
+imm 1
+bop []
+imm 2
+call
+yield
+jump to L2
+close L2
+push None
+return
+exit
+push range
+push pos @
+imm 0
+bop []
+imm 1
+call
+iter
+imm 0
+call
+push self !
+string 'pixels'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "__len__"
+string "self"
+imm 1
+tuple
+hint Self
+hint int
+imm 2
+tuple
+def
+let self
+push len
+push self !
+string 'pixels'
+getattr
+imm 1
+call
+return
+exit
+imm 2
+tuple
+string "__getitem__"
+string "self"
+string "key"
+imm 2
+tuple
+hint Self
+hint union
+hint int
+hint slice
+imm 2
+tuple
+anot
+hint union
+hint Pixel
+hint tuple
+hint Pixel
+hint Ellipsis
+imm 2
+tuple
+anot
+imm 2
+tuple
+anot
+imm 3
+tuple
+def
+let self
+let key
+push self !
+string 'pixels'
+getattr
+push key !
+bop []
+return
+exit
+imm 2
+tuple
+string "__iter__"
+string "self"
+imm 1
+tuple
+hint Self
+hint iterator
+imm 2
+tuple
+def
+let self
+push iter
+push self !
+string 'pixels'
+getattr
+imm 1
+call
+return
+exit
+imm 2
+tuple
+imm 4
+dict
+class
+let Row
+string "__init__"
+string "self"
+string "size"
+imm 2
+tuple
+hint Self
+hint tuple
+hint int
+hint int
+imm 2
+tuple
+anot
+hint Void
+imm 3
+tuple
+def
+let self
+let size
+push size !
+imm 1
+tuple
+string '.0'
+string 'y'
+imm 2
+tuple
+lambda
+let .0
+let y
+imm 1
+tuple
+push .0
+for L1
+let y
+push Row
+push size @
+imm 0
+bop []
+push y !
+imm 2
+call
+yield
+jump to L2
+close L2
+push None
+return
+exit
+push range
+push size @
+imm 1
+bop []
+imm 1
+call
+iter
+imm 0
+call
+push self !
+string 'rows'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "__getitem__"
+string "self"
+string "key"
+imm 2
+tuple
+hint Self
+hint union
+hint int
+hint slice
+imm 2
+tuple
+anot
+hint union
+hint Pixel
+hint Row
+hint tuple
+hint union
+hint Pixel
+hint Row
+imm 2
+tuple
+anot
+hint Ellipsis
+imm 2
+tuple
+anot
+imm 3
+tuple
+anot
+imm 3
+tuple
+def
+let self
+let key
+push self !
+string 'rows'
+getattr
+push key !
+bop []
+return
+exit
+imm 2
+tuple
+string "__len__"
+string "self"
+imm 1
+tuple
+hint Self
+hint int
+imm 2
+tuple
+def
+let self
+push len
+push self !
+string 'rows'
+getattr
+imm 1
+call
+return
+exit
+imm 2
+tuple
+string "__iter__"
+string "self"
+imm 1
+tuple
+hint Self
+hint iterator
+imm 2
+tuple
+def
+let self
+push iter
+push self !
+string 'rows'
+getattr
+imm 1
+call
+return
+exit
+imm 2
+tuple
+imm 4
+dict
+class
+let Matrix
+string "__init__"
+string "self"
+string "pos"
+string "size"
+imm 3
+tuple
+hint Self
+hint tuple
+hint int
+hint int
+imm 2
+tuple
+anot
+hint tuple
+hint int
+hint int
+imm 2
+tuple
+anot
+hint Void
+imm 4
+tuple
+def
+let self
+let pos
+let size
+push pos !
+push size !
+imm 2
+tuple
+string '.0'
+string 'y'
+imm 2
+tuple
+lambda
+let .0
+let y
+imm 2
+tuple
+push .0
+for L1
+let y
+push SubRow
+push pos @
+imm 0
+bop []
+push y !
+imm 2
+tuple
+push size @
+imm 0
+bop []
+imm 2
+call
+yield
+jump to L2
+close L2
+push None
+return
+exit
+push range
+push pos @
+imm 1
+bop []
+push pos @
+imm 1
+bop []
+push size @
+imm 1
+bop []
+bop +
+imm 2
+call
+iter
+imm 0
+call
+push self !
+string 'rows'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+imm 1
+dict
+class
+let SubMatrix
+string "__init__"
+string "self"
+imm 1
+tuple
+hint Self
+hint Void
+imm 2
+tuple
+def
+let self
+push None
+push self !
+string 'pane'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "render"
+string "self"
+imm 1
+tuple
+hint Self
+hint Void
+imm 2
+tuple
+def
+let self
+push None
+return
+exit
+imm 2
+tuple
+imm 2
+dict
+class
+let Graphic
+string "__init__"
+string "self"
+string "parent"
+string "pos"
+string "size"
+imm 4
+tuple
+hint Self
+hint Self
+hint tuple
+hint int
+hint int
+imm 2
+tuple
+anot
+hint tuple
+hint int
+hint int
+imm 2
+tuple
+anot
+hint Void
+imm 5
+tuple
+def
+let self
+let parent
+let pos
+let size
+push parent !
+push self !
+string 'parent'
+setattr
+push pos !
+unpack
+push self !
+string 'posX'
+setattr
+push self !
+string 'posY'
+setattr
+push size !
+unpack
+push self !
+string 'sizeX'
+setattr
+push self !
+string 'sizeY'
+setattr
+imm 0
+list %
+push self !
+string 'graphics'
+setattr
+imm 0
+list %
+push self !
+string 'children'
+setattr
+string 'children'
+setattr
+float 0.0
+float 0.0
+push self !
+string 'nextCorner'
+setattr
+push parent !
+is
+then
+push SubMatrix
+push pos !
+push size !
+imm 2
+call
+push self !
+string 'matrix'
+setattr
+push None
+return
+push None L1
+return
+exit
+imm 2
+tuple
+string "fuse"
+string "self"
+imm 1
+tuple
+hint Self
+hint Void
+imm 2
+tuple
+def
+let self
+push self !
+string 'parent'
+getattr
+string 'children'
+getattr
+string 'append'
+getattr
+push self !
+string 'children'
+getattr
+imm 1
+call
+del self
+push None
+return
+exit
+imm 2
+tuple
+string "fuseChildren"
+string "self"
+string "recursive"
+imm 2
+tuple
+hint Self
+hint bool
+hint Void
+imm 3
+tuple
+def
+let self
+let recursive
+push enumerate
+push self !
+string 'children'
+getattr
+imm 1
+call
+iter
+for L1
+unpack
+let i
+let child
+push recursive !
+cast bool
+if to L2
+then
+push self !
+string 'children'
+getattr
+string 'pop'
+getattr
+push i !
+imm 1
+call
+string 'fuseChildren'
+getattr
+push recursive !
+imm 1
+call
+push child ! L2
+string 'fuse'
+getattr
+imm 0
+call
+jump to L1
+close L3
+push None
+return
+exit
+imm 2
+tuple
+string "bindGraphic"
+string "self"
+string "graphic"
+imm 2
+tuple
+hint Self
+hint Graphic
+hint Void
+imm 3
+tuple
+def
+let self
+let graphic
+push self !
+string 'graphics'
+getattr
+string 'append'
+getattr
+push graphic !
+imm 1
+call
+push self !
+push graphic !
+string 'pane'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "unbindGraphic"
+string "self"
+string "i"
+imm 2
+tuple
+hint Self
+hint int
+hint Graphic
+imm 3
+tuple
+def
+let self
+let i
+push self !
+string 'graphics'
+getattr
+string 'pop'
+getattr
+push i !
+imm 1
+call
+return
+exit
+imm 2
+tuple
+string "makeChild"
+string "self"
+string "p2"
+imm 2
+tuple
+hint Self
+hint tuple
+hint union
+hint int
+hint float
+imm 2
+tuple
+anot
+hint union
+hint int
+hint float
+imm 2
+tuple
+anot
+imm 2
+tuple
+anot
+hint Self
+imm 3
+tuple
+def
+let self
+let p2
+push list
+push p2 !
+imm 1
+call
+let p2
+push isinstance
+push p2 !
+imm 0
+bop []
+push float
+imm 2
+call
+cast bool
+if to L1
+then
+push p2 !
+imm 0
+bop []
+push self !
+string 'sizeX'
+getattr
+bop *
+imm 1
+bop //
+push self !
+string 'posX'
+getattr
+bop +
+push p2 !
+imm 0
+store
+push isinstance L1
+push p2 !
+imm 1
+bop []
+push float
+imm 2
+call
+cast bool
+if to L2
+then
+push p2 !
+imm 1
+bop []
+push self !
+string 'sizeY'
+getattr
+bop *
+imm 1
+bop //
+push self !
+string 'posY'
+getattr
+bop +
+push p2 !
+imm 1
+store
+push Self L2
+push self !
+push self !
+string 'nextCorner'
+getattr
+push p2 !
+imm 0
+bop []
+push self !
+string 'nextCorner'
+getattr
+imm 0
+bop []
+bop -
+push p2 !
+imm 1
+bop []
+push self !
+string 'nextCorner'
+getattr
+imm 1
+bop []
+bop -
+imm 2
+tuple
+imm 3
+call
+let child
+push self !
+string 'children'
+getattr
+string 'append'
+getattr
+push child !
+imm 1
+call
+push p2 !
+push self !
+string 'nextCorner'
+setattr
+push child !
+return
+exit
+imm 2
+tuple
+string "render"
+string "self"
+imm 1
+tuple
+hint Self
+hint Void
+imm 2
+tuple
+def
+let self
+push self !
+string 'graphics'
+getattr
+push self !
+string 'children'
+getattr
+bop +
+iter
+for L1
+let job
+push job !
+string 'render'
+getattr
+imm 0
+call
+jump to L1
+close L2
+push None
+return
+exit
+imm 2
+tuple
+string "__getitem__"
+string "self"
+string "*keys"
+imm 2
+tuple
+hint Self
+hint tuple
+hint union
+hint int
+hint slice
+imm 2
+tuple
+anot
+hint Ellipsis
+imm 2
+tuple
+anot
+hint union
+hint Matrix
+hint Row
+hint Pixel
+hint tuple
+hint union
+hint Pixel
+hint Row
+imm 2
+tuple
+anot
+hint Ellipsis
+imm 2
+tuple
+anot
+imm 4
+tuple
+anot
+imm 3
+tuple
+def
+let self
+let keys
+push keys !
+imm 1
+tuple
+string 'x'
+imm 1
+tuple
+lambda
+let x
+push len
+push keys @
+imm 1
+call
+imm 1
+bop -
+cast bool
+if to L1
+then
+push x !
+push keys @
+imm 1
+bop []
+bop []
+return
+push x L1
+return
+exit
+push self !
+string 'matrix'
+getattr
+push keys @
+imm 0
+bop []
+bop []
+imm 1
+call
+return
+exit
+imm 2
+tuple
+string "__iter__"
+string "self"
+imm 1
+tuple
+hint Self
+hint iterator
+imm 2
+tuple
+def
+let self
+push iter
+push self !
+string 'matrix'
+getattr
+imm 1
+call
+return
+exit
+imm 2
+tuple
+imm 9
+dict
+class
+let Pane
+string "__init__"
+string "self"
+string "size"
+imm 2
+tuple
+hint Self
+hint tuple
+hint int
+hint int
+imm 2
+tuple
+anot
+hint Void
+imm 3
+tuple
+def
+let self
+let size
+imm 0
+list %
+imm 0
+list %
+imm 0
+imm 0
+imm 0
+bop +
+imm 1
+tuple
+push size !
+imm 1
+bop []
+bop *
+imm 1
+tuple
+push size !
+imm 0
+bop []
+bop *
+imm 0
+list %
+imm 0
+list %
+imm 0
+imm 0
+imm 0
+bop +
+imm 1
+tuple
+push size !
+imm 1
+bop []
+bop *
+imm 1
+tuple
+push size !
+imm 0
+bop []
+bop *
+imm 2
+tuple
+push self !
+string 'frames'
+setattr
+imm 0
+push self !
+string 'flipped'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "__getitem__"
+string "self"
+string "*keys"
+imm 2
+tuple
+hint Self
+hint tuple
+hint union
+hint int
+hint slice
+imm 2
+tuple
+anot
+hint union
+hint int
+hint slice
+hint Void
+imm 3
+tuple
+anot
+imm 2
+tuple
+anot
+hint union
+hint tuple
+hint tuple
+hint int
+imm 1
+tuple
+anot
+hint Ellipsis
+imm 3
+tuple
+anot
+hint tuple
+hint list
+hint int
+imm 1
+tuple
+anot
+hint Ellipsis
+imm 2
+tuple
+anot
+hint list
+hint int
+imm 1
+tuple
+anot
+imm 3
+tuple
+anot
+imm 3
+tuple
+def
+let self
+let keys
+push self !
+string 'frames'
+getattr
+push self !
+string 'flipped'
+getattr
+bop []
+let frame
+push keys !
+iter
+for L1
+let key
+push frame !
+push key !
+bop []
+let frame
+jump to L1
+close L2
+push frame !
+return
+exit
+imm 2
+tuple
+string "__setitem__"
+string "self"
+string "*keys"
+string "value"
+imm 3
+tuple
+hint Self
+hint tuple
+hint union
+hint int
+hint slice
+imm 2
+tuple
+anot
+hint union
+hint int
+hint slice
+hint Void
+imm 3
+tuple
+anot
+imm 2
+tuple
+anot
+hint int
+hint Void
+imm 4
+tuple
+def
+let self
+let keys
+let value
+push value !
+push self !
+string 'frames'
+getattr
+push self !
+string 'flipped'
+getattr
+cast bool
+not
+bop []
+imm 0
+list %
+push keys !
+bop +
+cast tuple $
+store
+push None
+return
+exit
+imm 2
+tuple
+string "flip"
+string "self"
+imm 1
+tuple
+hint Self
+hint Void
+imm 2
+tuple
+def
+let self
+push self !
+copy 1
+string 'flipped'
+getattr
+imm 1
+bop ^=
+swap 2
+string 'flipped'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+imm 4
+dict
+class
+let Framebuffer
+string "__init__"
+string "self"
+imm 1
+tuple
+hint Self
+hint Void
+imm 2
+tuple
+def
+let self
+push Pane
+string '__init__'
+getattr
+push self !
+push None
+push None
+imm 0
+imm 0
+push get_matrix
+imm 0
+call
+copy 1
+let size
+imm 4
+call
+push Matrix
+push size !
+imm 1
+call
+push self !
+string 'matrix'
+setattr
+push Framebuffer
+push size !
+imm 1
+call
+push self !
+string 'framebuffer'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "render"
+string "self"
+imm 1
+tuple
+hint Self
+hint Void
+imm 2
+tuple
+def
+let self
+push Pane
+string 'render'
+getattr
+push self !
+imm 1
+call
+push self !
+string 'flip'
+getattr
+imm 0
+call
+push None
+return
+exit
+imm 2
+tuple
+string "flip"
+string "self"
+imm 1
+tuple
+hint Self
+hint Void
+imm 2
+tuple
+def
+let self
+push self !
+string 'framebuffer'
+getattr
+string 'flip'
+getattr
+imm 0
+call
+push draw
+push self !
+string 'framebuffer'
+getattr
+imm 3
+tuple
+push None
+push None
+push None
+bop []
+imm 1
+call
+push None
+return
+exit
+imm 2
+tuple
+imm 3
+dict
+class
+let Screen
+push Screen
+imm 0
+call
+let SCREEN
+string "argc"
+string "wait"
+imm 2
+tuple
+hint int
+hint bool
+hint tuple
+hint int
+hint Ellipsis
+imm 2
+tuple
+anot
+imm 3
+tuple
+kern read
+let listen
+op read
+imm 0
+tuple
+kern sys_call
+let sys_call
+op sys
+string "parent"
+string "size"
+string "direction"
+imm 3
+tuple
+hint Pane
+hint union
+hint int
+hint float
+imm 2
+tuple
+anot
+hint Direction
+hint tuple
+hint Pane
+hint Pane
+imm 2
+tuple
+anot
+imm 4
+tuple
+def
+let parent
+let size
+let direction
+push direction !
+imm 1
+bop &
+cast bool
+if to L1
+then
+push size !
+float 1.0
+imm 2
+tuple
+jump to L2
+float 1.0 L1
+push size !
+imm 2
+tuple
+let s L2
+push parent !
+string 'makeChild'
+getattr
+push s !
+imm 1
+call
+let child1
+push parent !
+string 'makeChild'
+getattr
+string 'makeChild'
+getattr
+float 1.0
+float 1.0
+imm 1
+call
+let child2
+push child1 !
+push child2 !
+imm 2
+tuple
+return
+exit
+let bisect
+op bisect
+string "__init__"
+string "self"
+string "*points"
+imm 2
+tuple
+hint Self
+hint tuple
+hint Ellipsis
+imm 3
+tuple
+anot
+hint Void
+imm 3
+tuple
+def
+let self
+let points
+push list
+push points !
+imm 1
+call
+push self !
+string 'points'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "getColor"
+string "self"
+string "alpha"
+imm 2
+tuple
+hint Self
+hint float
+hint Color
+imm 3
+tuple
+def
+let self
+let alpha
+push range
+push len
+push self !
+string 'points'
+getattr
+imm 1
+call
+imm 1
+call
+iter
+for L1
+let i
+push self !
+string 'points'
+getattr
+push i !
+bop []
+copy 1
+let p
+imm 1
+bop []
+push alpha !
+bop >= b
+not
+if to L2
+then
+jump to L1
+jump to L4
+close L2
+push scale L3
+push self !
+string 'points'
+getattr
+push i c
+imm 1
+bop -
+bop []
+push p c
+push alpha !
+imm 3
+call
+return
+exit
+imm 2
+tuple
+imm 2
+dict
+class
+let Gradient
+push Color
+push 255
+push 0
+push 0
+imm 3
+call
+let RED
+push Color
+push 255
+push 128
+push 0
+imm 3
+call
+let ORANGE
+push Color
+push 255
+push 255
+push 0
+imm 3
+call
+let YELLOW
+push Color
+push 128
+push 255
+push 0
+imm 3
+call
+let LIME
+push Color
+push 0
+push 255
+push 0
+imm 3
+call
+let GREEN
+push Color
+push 255
+push 255
+push 255
+imm 3
+call
+let WHITE
+push Color
+push 0
+push 0
+push 0
+imm 3
+call
+let BLACK
+push Color
+push 0
+push 0
+push 255
+imm 3
+call
+let BLUE
+string "__init__"
+string "self"
+string "direction"
+string "gradient"
+string "solid"
+string "signed"
+imm 5
+tuple
+hint Self
+hint Direction
+hint Gradient
+hint bool
+hint bool
+hint Void
+imm 6
+tuple
+def
+let self
+let direction
+let gradient
+let solid
+let signed
+push Graphic
+string '__init__'
+getattr
+push self !
+imm 1
+call
+push direction !
+push self !
+string 'direction'
+setattr
+push gradient !
+push self !
+string 'gradient'
+setattr
+push solid !
+push self !
+string 'isSolid'
+setattr
+float 0.0
+push self !
+string 'alpha'
+setattr
+push signed !
+push self !
+string 'isSigned'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "setAlpha"
+string "self"
+string "t"
+imm 2
+tuple
+hint Self
+hint union
+hint int
+hint float
+imm 2
+tuple
+anot
+hint Void
+imm 3
+tuple
+def
+let self
+let t
+push isinstance
+push t !
+push float
+imm 2
+call
+cast bool
+if to L1
+then
+push t !
+push self !
+string 'alpha'
+setattr
+push None
+return
+push charToFloat L1
+push t !
+push self !
+string 'isSigned'
+getattr
+imm 2
+call
+push self !
+string 'alpha'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "changeGradient"
+string "self"
+string "newGrad"
+imm 2
+tuple
+hint Self
+hint Gradient
+hint Void
+imm 3
+tuple
+def
+let self
+let newGrad
+push newGrad !
+push self !
+string 'gradient'
+setattr
+push None
+return
+exit
+imm 2
+tuple
+string "render"
+string "self"
+imm 1
+tuple
+hint Self
+hint Void
+imm 2
+tuple
+def
+let self
+push range
+push len
+push self !
+string 'pane'
+getattr
+imm 1
+call
+copy 1
+let h
+imm 1
+call
+iter
+for
+let y
+push self !
+string 'direction'
+getattr
+imm 1
+bop &
+cast bool
+if to L2
+then
+push h
+jump to L3
+push len L1
+push self !
+string 'pane'
+getattr
+push y !
+bop []
+imm 1
+call
+copy 1
+let w
+let l L2
+push range
+push w c
+imm 1
+call
+iter
+for L3
+let x
+push self !
+string 'direction'
+getattr
+imm 1
+bop &
+cast bool
+if to L5
+then
+push y
+jump to L6
+push x L4
+let i L5
+push self !
+string 'solid'
+getattr
+cast bool
+if to L7
+then
+push self !
+string 'gradient'
+getattr
+string 'getColor'
+getattr
+push self !
+string 'alpha'
+getattr
+imm 1
+call
+jump to L8
+push self ! L6
+string 'gradient'
+getattr
+string 'getColor'
+getattr
+push i !
+push l !
+bop /
+imm 1
+call
+let c L7
+push i !
+push self !
+string 'alpha'
+getattr
+bop <=
+push self !
+string 'direction'
+getattr
+imm 1
+bop >>
+bop ^
+cast bool
+if to L9
+then
+push self !
+string 'pane'
+getattr
+push y !
+bop []
+push x !
+bop []
+string 'setColor'
+getattr
+push c !
+imm 1
+call
+jump to L4
+push self ! L8
+string 'pane'
+getattr
+push y !
+bop []
+push x !
+bop []
+string 'setColor'
+getattr
+push BLACK
+imm 1
+call
+jump to L4
+close L9
+jump to L1
+close L10
+push None
+return
+exit
+imm 2
+tuple
+imm 4
+dict
+class
+let Bar
+string "parent"
+string "num"
+string "direction"
+imm 3
+tuple
+hint Pane
+hint int
+hint Direction
+hint tuple
+hint Pane
+hint Ellipsis
+imm 2
+tuple
+anot
+imm 4
+tuple
+def
+let parent
+let num
+let direction
+imm 1
+push num !
+bop /
+let s
+push list
+push bisect
+push parent !
+push s !
+push direction !
+imm 3
+call
+imm 1
+call
+let children
+push children !
+imm 1
+bop []
+let subparent
+push range
+push num !
+imm 1
+bop -
+imm 1
+call
+iter
+for L1
+let i
+push children !
+string 'append'
+getattr
+push bisect
+push children !
+string 'pop'
+getattr
+imm 0
+call
+push s !
+push direction !
+imm 3
+call
+imm 1
+call
+jump to L1
+close L2
+push subparent !
+string 'fuseChildren'
+getattr
+imm 0
+call
+push subparent !
+string 'fuse'
+getattr
+imm 0
+call
+push tuple
+push children !
+imm 1
+call
+return
+exit
+let partition
+op partition
+push Color
+push 128
+push 0
+push 255
+imm 3
+call
+let PURPLE
+imm 0
+tuple
+def
+push Color
+imm 0
+imm 255
+imm 0
+imm 3
+call
+let color
+push SCREEN
+iter
+for L1
+let row
+push row !
+iter
+for L2
+let pixel
+push pixel !
+string 'setColor'
+getattr
+push color !
+imm 1
+call
+jump to L2
+close L3
+jump to L1
+close L4
+push SCREEN
+string 'render'
+getattr
+imm 0
+call
+push None
+return
+exit
+let green
+imm 0
+tuple
+def
+push len
+push SCREEN
+imm 1
+call
+let ySize
+push len
+push SCREEN
+imm 0
+bop []
+imm 1
+call
+let xSize
+push ySize !
+push xSize !
+bop *
+imm 3
+bop *
+let frameSize
+nop L1
+push listen
+push frameSize !
+imm 1
+call
+let cmd
+push range
+push ySize !
+imm 1
+call
+iter
+for L2
+let y
+push range
+push xSize !
+imm 1
+call
+iter
+for L3
+let x
+push ySize !
+push y !
+bop *
+push xSize !
+push x !
+bop *
+bop +
+let i
+push i !
+imm 3
+bop +
+let j
+push Color
+push cmd !
+push i !
+push j !
+push None
+slice
+call_ex
+let c
+push SCREEN
+push y !
+bop []
+push x !
+bop []
+string 'setColor'
+getattr
+push c !
+imm 1
+call
+jump to L3
+close L4
+jump to L2
+close L5
+push sys_call
+imm 0
+call
+jump to L1
+exit
+let display
+imm 0
+tuple
+def
+push bisect
+push SCREEN
+imm 1
+push HORIZONTAL
+imm 3
+call
+unpack
+let top
+let bottom
+push Gradient
+push RED
+float 0.0
+imm 2
+tuple
+push ORANGE
+float 0.25
+imm 2
+tuple
+push YELLOW
+float 0.3
+imm 2
+tuple
+push LIME
+float 0.4
+imm 2
+tuple
+push GREEN
+float 0.5
+imm 2
+tuple
+push GREEN
+float 0.75
+imm 2
+tuple
+push WHITE
+float 0.8
+imm 2
+tuple
+push WHITE
+float 1.0
+imm 2
+tuple
+imm 8
+call
+let dischargeGrad
+push Gradient
+push RED
+float 0.0
+imm 2
+tuple
+push YELLOW
+float 0.25
+imm 2
+tuple
+push BLACK
+float 0.5
+imm 2
+tuple
+push GREEN
+float 0.75
+imm 2
+tuple
+push BLUE
+float 1.0
+imm 2
+tuple
+imm 5
+call
+let chargeRateGrad
+push Bar
+push top !
+imm 3
+push chargeRateGrad !
+imm True
+imm 4
+call
+let chargeRateBar
+push Bar
+push top !
+imm 1
+push dischargeGrad !
+imm 3
+call
+let dischargeBar
+push partition
+push bottom !
+imm 4
+push VERTICAL
+imm 3
+call
+unpack
+let a
+let b
+let c
+let d
+push Gradient
+push PURPLE
+imm 0
+imm 2
+tuple
+push BLUE
+float 0.25
+imm 2
+tuple
+push GREEN
+float 0.3
+imm 2
+tuple
+push ORANGE
+float 0.5
+imm 2
+tuple
+push YELLOW
+float 0.7
+imm 2
+tuple
+push RED
+float 0.9
+imm 2
+tuple
+push RED
+float 0.95
+imm 2
+tuple
+push WHITE
+float 1.0
+imm 2
+tuple
+imm 8
+call
+let tempGrad
+push Bar
+push a !
+imm 0
+push tempGrad !
+imm 3
+call
+let CPUtempBar
+push Bar
+push b !
+imm 0
+push tempGrad !
+imm 3
+call
+let GPUtempBar
+push Bar
+push c !
+imm 0
+push tempGrad !
+imm 3
+call
+let memUsageBar
+push Bar
+push d !
+imm 0
+push tempGrad !
+imm 3
+call
+let fanSpeedBar
+nop L1
+push listen
+imm 6
+imm 1
+call
+let cmd
+push chargeRateBar !
+string 'setAlpha'
+getattr
+push cmd !
+imm 0
+bop []
+imm 1
+call
+push dischargeBar !
+string 'setAlpha'
+getattr
+push cmd !
+imm 1
+bop []
+imm 1
+call
+push CPUtempBar !
+string 'setAlpha'
+getattr
+push cmd !
+imm 2
+bop []
+imm 1
+call
+push GPUtempBar !
+string 'setAlpha'
+getattr
+push cmd !
+imm 3
+bop []
+imm 1
+call
+push memUsageBar !
+string 'setAlpha'
+getattr
+push cmd !
+imm 4
+bop []
+imm 1
+call
+push fanSpeedBar !
+string 'setAlpha'
+getattr
+push cmd !
+imm 5
+bop []
+imm 1
+call
+push SCREEN
+string 'render'
+getattr
+imm 0
+call
+push sys_call
+imm 0
+call
+jump to L1
+exit
+let vitals
