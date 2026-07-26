@@ -15,6 +15,11 @@ class Color:
     def __rmul__(self, other: float) -> Color:
         return self.__mul__(other)
 
+@_kern
+@_op('hsv')
+def from_hsv(*args: tuple[float[0.0, 360.0], float[0.0, 1.0], float[0.0, 1.0]]) -> Color:
+    ...
+
 BLACK = Color(0, 0, 0)
 BLUE = Color(0, 0, 255)
 GREEN = Color(0, 255, 0)

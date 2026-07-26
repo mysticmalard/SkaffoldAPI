@@ -12,6 +12,8 @@ def parse_anot(device, anot: str, method_of=None):
         device.app('hint Void')
     elif anot == '...':
         device.app('hint Ellipsis')
+    elif anot == 'iterator':
+        device.app('hint iter')
     elif regex.match(r"^\w+$", anot):
         if method_of and anot is method_of.__name__:
             device.app('hint Self')
@@ -39,7 +41,7 @@ def parse_anots(device, foo: function, method_of=None):
     sig = inspect.signature(foo, annotation_format=annotationlib.Format.STRING)
     params = dict(sig.parameters)
     for param in params:
-        device.app(f'string "{'*' if str(params[param])[0]=='*' else ''}{param}"')
+        device.app(f"string '{'*' if str(params[param])[0]=='*' else ''}{param}'")
     device.app(f'imm {len(params)}', 'tuple')
     for i, param in enumerate(params.values()):
         if param.annotation is param.empty:
@@ -54,35 +56,39 @@ def parse_anots(device, foo: function, method_of=None):
         device.app(f'imm {i+2}', 'tuple')
 
 def parse_funct(device, name: str, foo: function, method_of=None):
+    for f in foo.__code__.co_consts:
+        if isinstance(f, type(foo.__code__)):
+            for g in f.co_names:
+                if g not in __builtins__ and g not in device.deps and g in globals():
+                    parse(device, g)
     parse_anots(device, foo, method_of)
     device.app('def')
     translate(device, name, foo, method_of)
     device.app('exit')
     if method_of is None:
-        device.app(f'let {name}')
+        device.app(f'put {name}')
 
 def parse_kern(device, name, foo: function, method_of=None):
     parse_anots(device, foo, method_of)
     device.app(f'kern {get_kern_name(foo)}')
     if method_of is None:
-        device.app(f'let {name}')
+        device.app(f'put {name}')
 
 def parse_class(device, name: str, foo: type):
     for i, meth in enumerate(filter(lambda x: isinstance(x, function), vars(foo).values())):
-        device.app(f'string "{meth.__name__}"')
+        device.app(f'string {meth.__name__!r}')
         parse(device, meth.__name__, meth, foo)
         device.app('imm 2', 'tuple')
-    device.app(f'imm {i+1}', 'dict', 'class', f'let {name}')
+    device.app(f'imm {i+1}', 'dict', f'class {name}')
 
 def parse_const(device, name, foo: Any):
     if isinstance(foo, Screen):
-        device.app('push Screen', 'imm 0', 'call')
+        device.app('get Screen', 'call 0')
     elif isinstance(foo, Color):
-        device.app('push Color')
         for arg in foo.args:
-            device.app(f'push {arg}')
-        device.app('imm 3', 'call')
-    device.app(f'let {name}')
+            device.app(f'imm {arg}')
+        device.app('imm 3\nbuild tuple\nrgb')
+    device.app(f'put {name}')
 
 
 def parse_other(device, name: str, foo, method_of=None):

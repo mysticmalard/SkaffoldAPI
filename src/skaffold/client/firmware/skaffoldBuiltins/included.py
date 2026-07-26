@@ -22,6 +22,7 @@ types = [
     IntEnum,
     ReprEnum,
     Enum,
+    type(Ellipsis),
     Ellipsis,
     enumerate,
     filter,
@@ -45,6 +46,10 @@ types = [
     type,
     union,
     zip,
+]
+
+enums = [
+    Direction
 ]
 
 funcs = [
@@ -82,10 +87,6 @@ def sys_call() -> None:
 @_op('rebt')
 def reboot() -> None:
     ...
-
-@_op
-def index(container: Any, key: Any) -> Any:
-    return container.__getitem__(key)
 
 @_op
 def lerp(t: float, a: Any, b: Any) -> Any:

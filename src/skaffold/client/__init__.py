@@ -3,4 +3,6 @@
 
 from .firmware import *
 from .annotator import *
+from .optimizer import *
 from .linker import *
+from .assembler import *

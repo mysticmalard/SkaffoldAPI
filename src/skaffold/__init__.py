@@ -13,8 +13,10 @@ class Client:
     def __init__(self):
         self.code = []
         self.asm = [f'ver {__version__}']
+        self.temp = []
         self.deps = []
         self.pending = []
+        self.raw = []
         self.decs = {}
         self.patterns = {}
         include(self, SCREEN)
@@ -32,7 +34,25 @@ class Client:
             parse(self, *job)
     def app(self, *lines: tuple[str, ...]):
         for line in ('\n'.join(lines)).splitlines():
+            # if line == 'imm True':
+            # if 'get bisect' in line:
+                # pass
             self.asm.append(line)
+    def adi(self, *data):
+        # * Yeah I just used the word "datum" in 2026
+        # * Deal with it
+        for datum in data:
+            if isinstance(datum, str) and not len(datum)-1:
+                datum = ord(datum)
+            self.code.append(datum)
+    def optimize(self, level=0):
+        optimize(self, level)
+    def assemble(self):
+        assemble(self)
+        self.code = bytes(self.code)
+    def deb(self, *lines):
+        for line in ('\n'.join(lines)).splitlines():
+            self.raw.append(line)
 
 def get_clients():
     pass

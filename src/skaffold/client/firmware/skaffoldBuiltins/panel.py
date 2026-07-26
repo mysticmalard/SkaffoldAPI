@@ -44,7 +44,7 @@ class Matrix:
     def __init__(self, size: tuple[int, int]) -> None:
         self.rows = (Row(size[0], y) for y in range(size[1]))
 
-    def __getitem__(self, key: int | slice) -> Pixel | Row | tuple[Pixel | Row, ...]:
+    def __getitem__(self, key: int | slice) -> Pixel | Row | SubRow | tuple[Pixel | Row | SubRow, ...]:
         return self.rows[key]
 
     def __len__(self) -> int:
